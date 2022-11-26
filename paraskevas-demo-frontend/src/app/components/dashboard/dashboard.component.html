@@ -1,0 +1,48 @@
+<div style="display:flex;">
+  <mat-card class="my-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>domain</mat-icon>&nbsp;&nbsp;Companies
+      </mat-card-title>
+      <mat-card-subtitle>Total:<span>{{totalCompanies$ | async}}</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        Every company has a name and also holds information about its employees.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="warn" (click)="openTempDialog()">Delete all companies</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="my-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>person_outline</mat-icon>&nbsp;&nbsp;Employees
+      </mat-card-title>
+      <mat-card-subtitle>Total:<span>{{totalEmployees$ | async}}</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        Every employee belongs to a company and it is mandatory.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button routerLink="/preview-company" color="primary">View all companies</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<ng-template #dialogRef>
+  <div style="height:150px;width:300px;">
+    <h3 style="text-align:center">Are you sure?:</h3>
+    <p style="text-align:center">Companies will be deleted permanently</p>
+    <button style="margin:5%;" mat-button mat-dialog-close>Close</button>
+    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close (click)="deleteDialog()">confirm</button>
+  </div>
+</ng-template>
