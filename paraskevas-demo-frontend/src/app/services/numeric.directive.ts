@@ -6,36 +6,67 @@ import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 
 export class NumericDirective {
 
-    @Input() decimals: number = 0;
+  @Input("decimals") decimals: number = 0;
+  @Input("negative") negative: number = 0;
+  @Input("separator") separator: string = ".";
 
-    private check(value: string, decimals: number)
-    {
-      if (decimals <= 0) {
-        return String(value).match(new RegExp(/^\d+$/));
+  private checkAllowNegative(value: string) {
+    if (this.decimals <= 0) {
+      return String(value).match(new RegExp(/^-?\d+$/));
+    } else {
+      var regExpString =
+        "^-?\\s*((\\d+(\\"+ this.separator +"\\d{0," +
+        this.decimals +
+        "})?)|((\\d*(\\"+ this.separator +"\\d{1," +
+        this.decimals +
+        "}))))\\s*$";
+      return String(value).match(new RegExp(regExpString));
+    }
+  }
+
+  private check(value: string) {
+    if (this.decimals <= 0) {
+      return String(value).match(new RegExp(/^\d+$/));
+    } else {
+      var regExpString =
+        "^\\s*((\\d+(\\"+ this.separator +"\\d{0," +
+        this.decimals +
+        "})?)|((\\d*(\\"+ this.separator +"\\d{1," +
+        this.decimals +
+        "}))))\\s*$";
+      return String(value).match(new RegExp(regExpString));
+    }
+  }
+
+  private run(oldValue:any) {
+    setTimeout(() => {
+      let currentValue: string = this.el.nativeElement.value;
+      let allowNegative = this.negative > 0 ? true : false;
+
+      if (allowNegative) {
+        if (
+          !["", "-"].includes(currentValue) &&
+          !this.checkAllowNegative(currentValue)
+        ) {
+          this.el.nativeElement.value = oldValue;
+        }
       } else {
-          var regExpString = "^\\s*((\\d+(\\.\\d{0," + decimals + "})?)|((\\d*(\\.\\d{1," + decimals + "}))))\\s*$"
-          return String(value).match(new RegExp(regExpString));
+        if (currentValue !== "" && !this.check(currentValue)) {
+          this.el.nativeElement.value = oldValue;
+        }
       }
-    }
+    });
+  }
 
-    private specialKeys = [
-      'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Delete'
-    ];
+  constructor(private el: ElementRef) {}
 
-    constructor(private el: ElementRef) {
-    }
+  @HostListener("keydown", ["$event"])
+  onKeyDown(event: KeyboardEvent) {
+    this.run(this.el.nativeElement.value);
+  }
 
-    @HostListener('keydown', [ '$event' ])
-    onKeyDown(event: KeyboardEvent) {
-        if (this.specialKeys.indexOf(event.key) !== -1) {
-            return;
-        }
-        // Do not use event.keycode this is deprecated.
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
-        let current: string = this.el.nativeElement.value;
-        let next: string = current.concat(event.key);
-        if ( next && !this.check(next, this.decimals) ) {
-           event.preventDefault();
-        }
-    }
+  @HostListener("paste", ["$event"])
+  onPaste(event: ClipboardEvent) {
+    this.run(this.el.nativeElement.value);
+  }
 }

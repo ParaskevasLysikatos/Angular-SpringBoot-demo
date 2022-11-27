@@ -1,42 +1,75 @@
-<div style="display:flex;">
-  <mat-card class="my-card">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>domain</mat-icon>&nbsp;&nbsp;Companies
-      </mat-card-title>
-      <mat-card-subtitle>Total:<span>{{totalCompanies$ | async}}</span>
-      </mat-card-subtitle>
-    </mat-card-header>
 
-    <mat-card-content>
-      <p>
-        Every company has a name and also holds information about its employees.
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="warn" (click)="openTempDialog()">Delete all companies</button>
-    </mat-card-actions>
-  </mat-card>
+<div style="height:10%;display:flex;justify-content:center" class="row mt-5">
+  <div class="col-6">
+    <mat-card>
+      <mat-card-content>View the specific company details.</mat-card-content>
+      <mat-card-content>Note: Choose a company to edit in order to manage the employees.</mat-card-content>
 
-  <mat-card class="my-card">
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>person_outline</mat-icon>&nbsp;&nbsp;Employees
-      </mat-card-title>
-      <mat-card-subtitle>Total:<span>{{totalEmployees$ | async}}</span>
-      </mat-card-subtitle>
-    </mat-card-header>
+<mat-form-field class="m-2" style="width:50%;" appearance="fill">
+  <mat-label>Select an option</mat-label>
+  <mat-select #comSelect>
+    <mat-option>None</mat-option>
+    <ng-container *ngFor="let option of companies">
+      <mat-option [value]="option.id">{{option.name}}</mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+      <mat-card-actions>
+        <button [disabled]="comSelect.selected==undefined" class="btn btn-primary"  [routerLink]="['/edit-company', comSelect.value]">Navigate to company details</button>
+      </mat-card-actions>
+    </mat-card>
 
-    <mat-card-content>
-      <p>
-        Every employee belongs to a company and it is mandatory.
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button routerLink="/preview-company" color="primary">View all companies</button>
-    </mat-card-actions>
-  </mat-card>
+  </div>
 </div>
+
+<div class="row">
+  <div class="col-12">
+
+    <div style="display:flex;">
+      <mat-card class="my-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>domain</mat-icon>&nbsp;&nbsp;Companies
+          </mat-card-title>
+          <mat-card-subtitle>Total:<span>{{totalCompanies$ | async}}</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>
+            Every company has a name and also holds information about its employees.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="warn" (click)="openTempDialog()">Delete all companies</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="my-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>person_outline</mat-icon>&nbsp;&nbsp;Employees
+          </mat-card-title>
+          <mat-card-subtitle>Total:<span>{{totalEmployees$ | async}}</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>
+            Every employee belongs to a company and it is mandatory.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button routerLink="/preview-company" color="primary">View all companies</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+</div>
+
+
+
 
 <ng-template #dialogRef>
   <div style="height:150px;width:300px;">

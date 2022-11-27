@@ -1,56 +1,66 @@
-<div style="margin-left:30%">
-  <div class="container text-center m-3">
-    <div class="row myheader">
-      <div class="col">
-        Company name: <strong>{{companyName}}</strong>
-      </div>
-    </div>
-    <div class="row myheader">
-      <div class="col">
-        Number of employees: <strong>{{companyNumberOfEmployees}}</strong>
-      </div>
-    </div>
-    <div class="row myheader">
-      <div class="col">
-        Average company salary:<strong>{{companyAvgSalary | number : '1.2-2'}}</strong>
+<div class="row">
+
+  <div class="col-4">
+
+    <div class="m-3">
+      <div class="container text-center m-1">
+        <div class="row myheader">
+          <div class="col">
+            Company name: <strong>{{companyName}}</strong>
+          </div>
+        </div>
+        <div class="row myheader mt-3">
+          <div class="col">
+            Number of employees: <strong>{{companyNumberOfEmployees}}</strong>
+          </div>
+        </div>
+        <div class="row myheader mt-3">
+          <div class="col">
+            Average company salary:<strong>{{companyAvgSalary | number : '1.2-2'}}</strong>
+          </div>
+        </div>
+        <div class="row myheader mt-3">
+          <div class="col">
+            <button (click)="createEmployeeModal()" class="btn btn-primary">Create employee</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <h3>Edit company form</h3>
+  <div class="col-4">
+
+    <div class="card m-3">
+      <div class="card-header">
+        <h3>Edit company form</h3>
+      </div>
+      <div class="card-body">
+        <form class="form" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name">
+            <span class="text-danger"
+              *ngIf="(companyFormControl['name'].touched || submitted) && companyFormControl['name'].errors?.['required']">
+              Name is required
+            </span>
+          </div>
+          <div class="form-group d-flex justify-content-center">
+            <button type="submit" class="btn btn-success mt-3">Edit company</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="card-body">
-      <form class="form" [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" class="form-control" formControlName="name">
-          <span class="text-danger"
-            *ngIf="(companyFormControl['name'].touched || submitted) && companyFormControl['name'].errors?.['required']">
-            Name is required
-          </span>
-        </div>
-        <div class="form-group d-flex justify-content-center">
-          <button type="submit" class="btn btn-success mt-4">Edit company</button>
-        </div>
-      </form>
-    </div>
+
   </div>
 
-  <div class="row mt-3">
-    <div class="col-3">
-      <button (click)="createEmployeeModal()"  class="btn btn-primary">Create employee</button>
-    </div>
-    <div class="col-3">
+  <div class="col-4 mt-5 ml-5">
       <button (click)="deleteAllEmployeesModal()" class="btn btn-secondary">Delete all employees</button>
-    </div>
   </div>
+
 </div>
 
 
-
-<div style=" margin-top: 3%;" class="mat-elevation-z8">
+<div style=" margin-top: 1%;" class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <!-- No. Column -->
     <ng-container matColumnDef="id">
@@ -113,7 +123,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[2, 4]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSize]="4" [pageSizeOptions]="[2, 4]" showFirstLastButtons></mat-paginator>
 </div>
 
 
@@ -122,7 +132,8 @@
     <h3 style="text-align:center">Are you sure?:</h3>
     <p style="text-align:center">All employees of this company will be deleted permanently</p>
     <button style="margin:5%;" mat-button mat-dialog-close>Close</button>
-    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close (click)="deleteAllEmployeesOfCompany()">confirm</button>
+    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close
+      (click)="deleteAllEmployeesOfCompany()">confirm</button>
   </div>
 </ng-template>
 
@@ -132,6 +143,7 @@
     <h3 style="text-align:center">Are you sure?:</h3>
     <p style="text-align:center">This employee of this company will be deleted permanently</p>
     <button style="margin:5%;" mat-button mat-dialog-close>Close</button>
-    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close (click)="deleteEmployee(myID)">confirm</button>
+    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close
+      (click)="deleteEmployee(myID)">confirm</button>
   </div>
 </ng-template>
