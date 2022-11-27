@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, shareReplay, take } from 'rxjs';
+import { Observable, shareReplay, Subject, take } from 'rxjs';
 import { Company } from '../interfaces/company.interface';
 
 @Injectable({
@@ -17,6 +17,8 @@ readonly url="http://localhost:8080/api/companies"
   constructor(
     private httpClient: HttpClient,
   ) { }
+
+  deleteAllComEvent = new Subject<boolean>();
 
   public getAllCompanies(): Observable<Company[]> {
     return this.httpClient

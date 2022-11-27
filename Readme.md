@@ -43,13 +43,13 @@
 	
 ***Frontend(Angular)***
 
-	 1) Download LTS from https://nodejs.org/en/download/ and install it
+	1) Download LTS from https://nodejs.org/en/download/ and install it
 	 
     2) Open a new terminal and issue: npm install -g @angular/cli
     
     3) Go to: paraskevas-demo-frontend file location in a terminal and issue the command: npm install
     
     (only on mac)
-     4) sudo npm link @angular/cli 5) Open the
+    4) sudo npm link @angular/cli 5) Open the
      
     5) Application's URL in Chrome: http://localhost:4200/

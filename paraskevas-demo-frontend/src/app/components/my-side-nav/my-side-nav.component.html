@@ -4,6 +4,15 @@
   </button>
   <span>Angular SpringBoot demo</span>
   <span class="toolbar-item-spacer"></span>
+
+  <button mat-icon-button matTooltip="Settings" [matMenuTriggerFor]="settingsMenu">
+    <mat-icon>settings</mat-icon>
+  </button>
+  <mat-menu #settingsMenu [overlapTrigger]="false" yPosition="below">
+      <button mat-menu-item  (click)="openTempDialog()">
+       <mat-icon>delete_sweep</mat-icon>Delete all companies</button>
+  </mat-menu>
+
   <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
     <mat-icon>account_circle</mat-icon>
   </button>
@@ -15,10 +24,11 @@
     </button>
     <button mat-menu-item>
       <a target="_blank" href="https://gist.github.com/iznenad/dce4b75a4fb3e7fca02ce9601d43e7f1#file-test-md">
-        <mat-icon>settings</mat-icon><span>Task description</span>
+        <mat-icon>list_alt</mat-icon><span>Task description</span>
       </a>
     </button>
   </mat-menu>
+
 </mat-toolbar>
 
 <mat-sidenav-container class="app-container">
@@ -53,3 +63,11 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
+<ng-template #dialogRef>
+  <div style="height:150px;width:300px;">
+    <h3 style="text-align:center">Are you sure?:</h3>
+    <p style="text-align:center">Companies will be deleted permanently</p>
+    <button style="margin:5%;" mat-button mat-dialog-close>Close</button>
+    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close (click)="deleteDialog()">confirm</button>
+  </div>
+</ng-template>

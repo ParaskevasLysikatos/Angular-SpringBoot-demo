@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { map, tap } from 'rxjs';
 import { Company } from 'src/app/interfaces/company.interface';
@@ -28,7 +28,7 @@ export class EditCompanyComponent {
   companyName!:string;
   companyNumberOfEmployees!:number;
   companyAvgSalary!:number;
-  companyEmployees!:Employee[];
+  companyEmployees:Employee[]=[];
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -50,7 +50,8 @@ export class EditCompanyComponent {
     private employeeSrv:EmployeeService,
     private toastrService: ToastrService,
 		private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
 		) { }
 
     ngOnInit() {
@@ -59,7 +60,14 @@ export class EditCompanyComponent {
         });
       this.companyID= Number(this.route.snapshot.paramMap.get('id'));
       this.refreshCompany();
+      this.companySrv.deleteAllComEvent.subscribe((res)=>{
+        if(res){
+          this.router.navigateByUrl('/dashboard');
+          this.companySrv.deleteAllComEvent.next(false);
+        }
+      });
     }
+
 
     get companyFormControl() {
       return this.companyForm.controls;

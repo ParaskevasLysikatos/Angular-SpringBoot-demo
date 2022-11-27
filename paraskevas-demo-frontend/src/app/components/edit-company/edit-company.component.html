@@ -53,12 +53,13 @@
 
   </div>
 
-  <div class="col-4 mt-5 ml-5">
+  <div style="margin-left:5%;" class="col-3 mt-5">
       <button (click)="deleteAllEmployeesModal()" class="btn btn-secondary">Delete all employees</button>
   </div>
 
 </div>
 
+<h3 *ngIf="companyEmployees.length==0" style="text-align:center;margin-top: 12%;">No Employees in this company, create one.</h3>
 
 <div style=" margin-top: 1%;" class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -102,7 +103,7 @@
 
     <!-- edit Column -->
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit Column </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
       <td mat-cell *matCellDef="let element"> <button mat-menu-item (click)="editEmployeeModal(element.id)">
           <a>
             <mat-icon>edit</mat-icon>
@@ -112,7 +113,7 @@
 
     <!-- delete Column -->
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete Column </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
       <td mat-cell *matCellDef="let element"><button mat-menu-item (click)="deleteEmployeeModal(element.id)">
           <a>
             <mat-icon>delete</mat-icon>

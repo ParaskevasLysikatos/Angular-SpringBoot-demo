@@ -1,8 +1,9 @@
 
+
 <div style="height:10%;display:flex;justify-content:center" class="row mt-5">
   <div class="col-6">
     <mat-card>
-      <mat-card-content>View the specific company details.</mat-card-content>
+      <mat-card-content><strong> View the specific company details.</strong></mat-card-content>
       <mat-card-content>Note: Choose a company to edit in order to manage the employees.</mat-card-content>
 
 <mat-form-field class="m-2" style="width:50%;" appearance="fill">
@@ -40,9 +41,6 @@
             Every company has a name and also holds information about its employees.
           </p>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="warn" (click)="openTempDialog()">Delete all companies</button>
-        </mat-card-actions>
       </mat-card>
 
       <mat-card class="my-card">
@@ -59,23 +57,8 @@
             Every employee belongs to a company and it is mandatory.
           </p>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button routerLink="/preview-company" color="primary">View all companies</button>
-        </mat-card-actions>
       </mat-card>
     </div>
 
   </div>
 </div>
-
-
-
-
-<ng-template #dialogRef>
-  <div style="height:150px;width:300px;">
-    <h3 style="text-align:center">Are you sure?:</h3>
-    <p style="text-align:center">Companies will be deleted permanently</p>
-    <button style="margin:5%;" mat-button mat-dialog-close>Close</button>
-    <button style="margin:5%;" mat-raised-button color="warn" mat-dialog-close (click)="deleteDialog()">confirm</button>
-  </div>
-</ng-template>
