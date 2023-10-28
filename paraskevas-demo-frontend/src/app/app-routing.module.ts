@@ -8,11 +8,11 @@ import { PreviewCompanyComponent } from './components/preview-company/preview-co
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-	{ path: 'create-company', component: CreateCompanyComponent },
+  { path: 'create-company', component: CreateCompanyComponent },
   { path: 'preview-company', component: PreviewCompanyComponent },
   { path: 'edit-company/:id', component: EditCompanyComponent },
-	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-	{ path: '**', component: PageNotFoundComponent }
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
